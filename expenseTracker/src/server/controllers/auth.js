@@ -6,24 +6,21 @@ import User from "../models/User.js"
 
 export const register = async (req, res) => {
     try {
+        console.log(req.body.user.wallets)
+        console.log("HIT Controller")
         const {
             username,
             password,
-            wallets,
-            balance
+            wallets
         } = req.body.user;
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
-
         req.body.user.password = passwordHash
-        req.body.user.wallets = [{ name: wallets, balance: balance }]
-        console.log(req.body.user)
-
+        req.body.user.wallets = [{ name: wallets[0].name, balance: wallets[0].balance }]
         const newUser = new User(
             req.body.user
         );
         const savedUser = await newUser.save();
-        console.log(savedUser, "savedUser")
         res.status(201).json(savedUser);
     } catch (err) {
         res.status(500).json({ error: err.message });

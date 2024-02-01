@@ -38,24 +38,29 @@ const LoginForm = () => {
 
     const register = async (values, onSubmitProps) => {
         const savedUserResponse = await fetch(
-            "http://127.0.0.1/3001/auth/register",
+            "/auth/register",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: {
-                    user: {
-                        username: values.username,
-                        password: values.password,
-                        wallets: [{
-                            name: values.wallet,
-                            balance: values.balance
-                        }]
+                body: JSON.stringify(
+                    {
+                        user: {
+                            username: values.username,
+                            password: values.password,
+                            wallets: [
+                                {
+                                    name: values.wallet,
+                                    balance: values.balance
+                                }
+                            ]
 
+                        }
                     }
-                }
+                )
             }
         )
         const savedUser = await savedUserResponse.json();
+        console.log(savedUser)
         onSubmitProps.resetForm()
 
         if (savedUser) {
@@ -65,7 +70,7 @@ const LoginForm = () => {
 
     const login = async (values, onSubmitProps) => {
         const loggedInResponse = await fetch(
-            "http://localhost/3001/auth/login",
+            "/auth/login",
             {
                 method: "POST",
                 body: JSON.stringify(values)
