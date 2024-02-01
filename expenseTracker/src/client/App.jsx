@@ -17,8 +17,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/Dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
-          <Route path="/Wallets" element={isAuth ? <Wallets /> : <Navigate to="/" />} />
+          <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
+          <Route path="/wallets" element={isAuth ? <Wallets /> : <Navigate to="/" />} />
         </Routes>
       </ThemeProvider>
     </>
