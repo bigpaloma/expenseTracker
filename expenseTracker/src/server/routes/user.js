@@ -22,7 +22,7 @@ router.post("/:id", addTransaction);
 router.post("/:id/wallets", addWallet);
 
 /** DELETE */
-router.delete("/:id", removeTransaction);
+router.delete("/:id/:trxId", removeTransaction);
 router.delete("/:id/wallet", removeWallet);
 
 export default router;

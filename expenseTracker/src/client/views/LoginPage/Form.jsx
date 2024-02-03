@@ -97,78 +97,77 @@ const LoginForm = () => {
     };
 
     return (
-        <Formik
-            onSubmit={handleFormSubmit}
-            initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-            validationSchema={isLogin ? loginSchema : registerSchema}
-        >
-            {({
-                handleChange,
-                handleBlur,
-                resetForm,
-                values,
-                errors,
-            }) => (
-                <Form >
-                    {isRegister && (<>
-                        <label htmlFor="wallet">Your first Wallet</label>
+        <div className="mt-10">
+            <Formik
+                onSubmit={handleFormSubmit}
+                initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+                validationSchema={isLogin ? loginSchema : registerSchema}
+                className
+            >
+                {({
+                    handleChange,
+                    handleBlur,
+                    resetForm,
+                    values,
+                    errors,
+                }) => (
+                    <Form >
+                        {isRegister && (<>
+                            <label htmlFor="wallet">Your first Wallet</label>
+                            <input
+                                type="text"
+                                id="wallet"
+                                name="wallet"
+                                placeholder="checkings"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.wallet}></input>
+                            {errors.wallet && <p>{errors.wallet}</p>}
+                            <label htmlFor="balance">Initial Balance of your Wallet</label>
+                            <input
+                                type="number"
+                                id="balance"
+                                name="balance"
+                                placeholder="0"
+                                step="0.01"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.balance}></input>
+                            {errors.balance && <p>{errors.balance}</p>}
+                        </>)}
+                        <label htmlFor="username">username</label>
                         <input
                             type="text"
-                            id="wallet"
-                            name="wallet"
-                            placeholder="checkings"
+                            id="username"
+                            name="username"
+                            placeholder="tracker9099"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.wallet}></input>
-                        {errors.wallet && <p>{errors.wallet}</p>}
-
-                        <label htmlFor="balance">Initial Balance of your Wallet</label>
+                            value={values.username}></input>
+                        {errors.username && <p>{errors.username}</p>}
+                        <label htmlFor="password">password</label>
                         <input
-                            type="number"
-                            id="balance"
-                            name="balance"
-                            placeholder="0"
-                            step="0.01"
+                            type="password"
+                            id="password"
+                            name="password"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.balance}></input>
-                        {errors.balance && <p>{errors.balance}</p>}
-                    </>)}
-                    <label htmlFor="username">username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="tracker9099"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.username}></input>
-                    {errors.username && <p>{errors.username}</p>}
-
-                    <label htmlFor="password">password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}></input>
-                    {errors.password && <p>{errors.password}</p>}
-
-                    <div>
-                        <button type="submit">{isLogin ? "LOGIN" : "REGISTER"}</button>
-                        <button type="button"
-                            onClick={() => {
-                                setPageType(isLogin ? "register" : "login");
-                                resetForm();
-                            }}>{isLogin
-                                ? "Don't have an Account? Sign Up here."
-                                : "Already have an Account? Login here."}</button>
-                    </div>
-                </Form>
-            )}
-
-        </Formik>
+                            value={values.password}></input>
+                        {errors.password && <p>{errors.password}</p>}
+                        <div>
+                            <button type="submit">{isLogin ? "LOGIN" : "REGISTER"}</button>
+                            <button type="button"
+                                onClick={() => {
+                                    setPageType(isLogin ? "register" : "login");
+                                    resetForm();
+                                }}>{isLogin
+                                    ? "Don't have an Account? Sign Up here."
+                                    : "Already have an Account? Login here."}</button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
+        </div>
     )
 
 }

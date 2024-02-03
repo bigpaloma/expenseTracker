@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema(
                 default: Date.now,
                 //required: true
             },
+            wallet: {
+                type: String,
+                //required: true
+            }
         }],
     },
     { timestamps: true }

@@ -6,8 +6,6 @@ import User from "../models/User.js"
 
 export const register = async (req, res) => {
     try {
-        console.log(req.body.user.wallets)
-        console.log("HIT Controller")
         const {
             username,
             password,
@@ -39,7 +37,7 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         delete user.password
-        res.status(500).json({ token, user })
+        res.status(201).json({ token, user })
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
