@@ -28,6 +28,7 @@ export default function Dashboard() {
             });
         const data = await response.json();
         setUser(data);
+        console.log("inside getuser", [...data.transactions.reverse()])
         setTransactionsArr([...data.transactions.reverse()])
         setWallets([...data.wallets])
     };
@@ -118,7 +119,7 @@ export default function Dashboard() {
         )
         const updatedUser = await addedTransactionResponse.json();
         // WHITOUT THIS CONSOLE.LOG THE SETSTATE DOES NOT TRIGGER ????????
-        //console.log([...updatedUser.transactions.reverse()])
+        console.log("inside addTransaction", [...updatedUser.transactions.reverse()])
         // WHITOUT THIS CONSOLE.LOG THE SETSTATE DOES NOT TRIGGER ????????
         setTransactionsArr([...updatedUser.transactions.reverse()])
         onSubmitProps.resetForm();
@@ -133,6 +134,7 @@ export default function Dashboard() {
             }
         )
         const updatedUser = await deletedTransactionResponse.json();
+        //1console.log("inside delete", [...updatedUser.transactions.reverse()])
         setTransactionsArr([...updatedUser.transactions.reverse()])
     };
 

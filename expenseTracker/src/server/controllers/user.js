@@ -37,7 +37,7 @@ export const addWallet = async (req, res) => {
     try {
         const { id } = req.params;
         const wallet = req.body.wallet
-        await User.findByIdAndUpdate(id, { $push: { wallets: wallet } })
+        await User.findByIdAndUpdate(id, { $push: { wallets: wallet } }).populate("wallets")
         const user = await User.findById(id)
         res.status(200).json(user.wallets);
     } catch (err) {
@@ -50,8 +50,9 @@ export const addTransaction = async (req, res) => {
         const { id } = req.params;
         const transaction = req.body.transaction
         const user = await User.findById(id)
-        const wallet = await User.find({ _id: id })
         console.log(transaction.wallet)
+        const wallet = await User.find({ "wallets.name": transaction.wallet })
+        console.log(wallet)
         await User.findByIdAndUpdate(id, { $push: { transactions: transaction } })
         res.status(200).json(user);
     } catch (err) {
