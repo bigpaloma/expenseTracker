@@ -50,7 +50,6 @@ const LoginForm = () => {
             }
         )
         const savedUser = await savedUserResponse.json();
-        console.log(savedUser)
         onSubmitProps.resetForm()
 
         if (savedUser) {

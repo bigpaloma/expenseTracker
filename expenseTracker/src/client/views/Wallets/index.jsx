@@ -12,17 +12,6 @@ export default function Wallets() {
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const data = await getUserData(_id, token);
-    //         setWallets(data.wallets);
-    //     })
-    //     return () => {
-    //         setWallets(data.wallets);
-    //         console.log(wallets)
-    //     };
-    // }, []);
-
     useEffect(() => {
         const getUsers = async () => {
             const data = await getUserData(_id, token);
@@ -76,7 +65,6 @@ export default function Wallets() {
     };
 
     const deleteWallet = async (wallet) => {
-        console.log(wallet)
         const deletedWalletResponse = await fetch(
             `/user/${_id}/wallet/${wallet._id}`,
             {

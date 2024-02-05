@@ -10,6 +10,7 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
     const [transactionType, setTransactionType] = useState("expense");
     const isExpense = transactionType === "expense";
     const { _id } = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
     const expenseCategoriesUnsorted = userExpenses.map((x) => x.category)
     const incomeCategoriesUnsorted = userIncome.map((x) => x.category)
     const RemoveDuplicates = (arr) => {
@@ -39,7 +40,10 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
             `/user/${_id}`,
             {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify(
                     {
                         transaction: {
@@ -122,11 +126,6 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
                                     touched
                                 }) => (
                                     <Form>
-                                        {console.log(errors.category,
-                                            values.newCategory,
-                                            values,
-                                            errors,
-                                        )}
                                         <div className="flex flex-col gap-3">
                                             <div>
                                                 <MyDatePicker name="date" />

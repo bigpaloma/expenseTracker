@@ -15,7 +15,6 @@ export default function Card({ setTransactionsArr, dataArr, isExpense }) {
             }
         )
         const updatedTransactions = await deletedTransactionResponse.json();
-        console.log(updatedTransactions)
         setTransactionsArr([...updatedTransactions])
     };
 

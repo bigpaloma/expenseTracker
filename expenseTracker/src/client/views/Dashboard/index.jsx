@@ -14,7 +14,6 @@ export default function Dashboard() {
     const [transactionsArr, setTransactionsArr] = useState([...user.transactions].reverse())
     const userExpenses = transactionsArr.filter((x) => x.type === "expense")
     const userIncome = transactionsArr.filter((x) => x.type === "income")
-    console.log(transactionsArr)
 
 
     useEffect(() => {

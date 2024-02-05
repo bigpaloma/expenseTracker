@@ -123,11 +123,6 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
                                     touched
                                 }) => (
                                     <Form>
-                                        {console.log(errors.category,
-                                            values.newCategory,
-                                            values,
-                                            errors,
-                                        )}
                                         <div className="flex flex-col gap-3">
                                             <div>
                                                 <MyDatePicker name="date" />
