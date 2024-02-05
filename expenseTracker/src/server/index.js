@@ -75,7 +75,7 @@ async function run() {
     await mongoose.connect(uri, clientOptions);
     await mongoose.connection.db.admin().command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    ViteExpress.listen(app, PORT, () => console.log(`SERVER PORT: ${PORT}`));
+    ViteExpress.listen(app, 3001, () => console.log(`SERVER PORT: ${3001}`));
   } catch (error) {
     // Ensures that the client will close when you error
     console.log(error)
