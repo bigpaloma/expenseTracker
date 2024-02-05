@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const id = new mongoose.Types.ObjectId();
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema(
     {
@@ -23,35 +23,9 @@ const UserSchema = new mongoose.Schema(
                 type: Number,
                 //required: true
             }
-
         }],
         transactions: [{
-            type: {
-                type: String,
-                enum: ['expense', 'income'],
-                //required: true
-            },
-            label: {
-                type: String,
-                //required: true
-            },
-            amount: {
-                type: Number,
-                //required: true
-            },
-            category: {
-                type: String,
-                //required: true
-            },
-            date: {
-                type: Date,
-                default: Date.now,
-                //required: true
-            },
-            wallet: {
-                type: String,
-                //required: true
-            }
+            type: Schema.Types.ObjectId, ref: "Transaction"
         }],
     },
     { timestamps: true }

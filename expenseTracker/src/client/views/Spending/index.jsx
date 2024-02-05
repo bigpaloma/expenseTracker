@@ -1,25 +1,23 @@
-import React from "react";
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import Card from "./Card";
-import TransactionForm from "./TransactionForm";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Card from "./Card"
 import getUserData from "../../utils/getUser";
-import "react-datepicker/dist/react-datepicker.css";
+import TransactionForm from "./TransactionForm";
 
-export default function Dashboard() {
+export default function Spending() {
 
     /** USER LOGIC */
     const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+    const [wallets, setWallets] = useState(user.wallets);
     const [transactionsArr, setTransactionsArr] = useState([...user.transactions].reverse())
     const userExpenses = transactionsArr.filter((x) => x.type === "expense")
     const userIncome = transactionsArr.filter((x) => x.type === "income")
-    console.log(transactionsArr)
-
 
     useEffect(() => {
         const getUsers = async () => {
             const data = await getUserData(user._id, token);
+            setWallets(data.wallets);
             setTransactionsArr([...data.transactions].reverse());
 
         };
@@ -31,26 +29,19 @@ export default function Dashboard() {
         };
     }, []);
 
-    if (!user) {
-        return null;
-    }
-
     return (
         <>
-            <div className="text-center mt-10">
-                <h1 className="font-bold text-6xl">Dashboard</h1>
-            </div>
-            <div className="max-w-screen flex flex-col lg:flex-row items-center lg:items-start justify-center gap-3">
+            <div className="w-screen h-screen flex justify-center items-start py-10">
                 <Card
                     dataArr={userExpenses}
                     setTransactionsArr={setTransactionsArr}
                     isExpense={true} />
-                <Card
-                    dataArr={userIncome}
-                    setTransactionsArr={setTransactionsArr}
-                    isExpense={false} />
+                <TransactionForm
+                    wallets={wallets}
+                    userExpenses={userExpenses}
+                    userIncome={userIncome}
+                    setTransactionsArr={setTransactionsArr} />
             </div>
         </>
     )
 }
-

@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Flowbite, DarkThemeToggle } from "flowbite-react";
 import LoginPage from "./views/LoginPage";
 import Dashboard from "./views/Dashboard";
-import Navbar from "./views/Navbar";
+import NavbarComp from "./views/Navbar";
 import Wallets from "./views/Wallets";
-import "./App.css";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { useSelector } from "react-redux";
+import Spending from "./views/Spending";
 
 function App() {
 
   const isAuth = Boolean(useSelector((state) => state.token))
+
   return (
     <>
-      <ThemeProvider>
-        <Navbar />
+      <Flowbite>
+        <NavbarComp />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
           <Route path="/wallets" element={isAuth ? <Wallets /> : <Navigate to="/" />} />
+          <Route path="/spending" element={isAuth ? <Spending /> : <Navigate to="/" />} />
         </Routes>
-      </ThemeProvider>
+      </Flowbite>
     </>
   );
 }

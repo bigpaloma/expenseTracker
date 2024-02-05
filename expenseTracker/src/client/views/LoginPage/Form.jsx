@@ -1,33 +1,11 @@
 import { useState } from "react";
 import { Formik, Form } from "formik";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
-
-const registerSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required"),
-    wallet: yup.string().required("required"),
-    balance: yup.number().required("required"),
-});
-
-const loginSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required"),
-});
-
-const initialValuesRegister = {
-    username: "",
-    password: "",
-    wallet: "",
-    balance: 0,
-};
-
-const initialValuesLogin = {
-    username: "",
-    password: "",
-};
+import { loginSchema } from "./yup/loginSchema";
+import { registerSchema } from "./yup/registerSchema";
+import { Button, Label, TextInput } from 'flowbite-react';
 
 const LoginForm = () => {
     const [pageType, setPageType] = useState("login");
@@ -35,6 +13,18 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const isLogin = pageType === "login";
     const isRegister = pageType === "register"
+
+    const initialValuesRegister = {
+        username: "",
+        password: "",
+        wallet: "",
+        balance: 0,
+    };
+
+    const initialValuesLogin = {
+        username: "",
+        password: "",
+    };
 
     const register = async (values, onSubmitProps) => {
         const savedUserResponse = await fetch(
@@ -97,77 +87,124 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="mt-10">
-            <Formik
-                onSubmit={handleFormSubmit}
-                initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-                validationSchema={isLogin ? loginSchema : registerSchema}
-                className
-            >
-                {({
-                    handleChange,
-                    handleBlur,
-                    resetForm,
-                    values,
-                    errors,
-                }) => (
-                    <Form >
-                        {isRegister && (<>
-                            <label htmlFor="wallet">Your first Wallet</label>
-                            <input
-                                type="text"
-                                id="wallet"
-                                name="wallet"
-                                placeholder="checkings"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.wallet}></input>
-                            {errors.wallet && <p>{errors.wallet}</p>}
-                            <label htmlFor="balance">Initial Balance of your Wallet</label>
-                            <input
-                                type="number"
-                                id="balance"
-                                name="balance"
-                                placeholder="0"
-                                step="0.01"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.balance}></input>
-                            {errors.balance && <p>{errors.balance}</p>}
-                        </>)}
-                        <label htmlFor="username">username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="tracker9099"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.username}></input>
-                        {errors.username && <p>{errors.username}</p>}
-                        <label htmlFor="password">password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}></input>
-                        {errors.password && <p>{errors.password}</p>}
-                        <div>
-                            <button type="submit">{isLogin ? "LOGIN" : "REGISTER"}</button>
-                            <button type="button"
-                                onClick={() => {
-                                    setPageType(isLogin ? "register" : "login");
-                                    resetForm();
-                                }}>{isLogin
-                                    ? "Don't have an Account? Sign Up here."
-                                    : "Already have an Account? Login here."}</button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+        <>
+            <div className="flex justify-center">
+                <div className="grow">
+                    <Formik
+                        onSubmit={handleFormSubmit}
+                        initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+                        validationSchema={isLogin ? loginSchema : registerSchema}
+                        className
+                    >
+                        {({
+                            handleChange,
+                            handleBlur,
+                            resetForm,
+                            values,
+                            errors,
+                            touched
+                        }) => (
+                            <Form className="flex flex-col sm:gap-1 lg:gap-4">
+                                {isRegister &&
+                                    <>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="wallet" value="Name of Your First Wallet" />
+                                            </div>
+                                            <TextInput
+                                                value={values.wallet}
+                                                id="wallet"
+                                                name="wallet"
+                                                type="text"
+                                                placeholder="checkings"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                helperText={errors.wallet ?
+                                                    (touched.wallet ?
+                                                        <span className="text-red-400 text-sm">{errors.wallet}</span> :
+                                                        null)
+                                                    : null
+                                                }
+                                                required />
+                                        </div>
+                                        <div>
+                                            <div className="mb-2 block">
+                                                <Label htmlFor="balance" value="Initial Balance on Your Wallet" />
+                                            </div>
+                                            <TextInput
+                                                value={values.balance}
+                                                id="balance"
+                                                name="balance"
+                                                type="number"
+                                                step="0.01"
+                                                placeholder="0"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                helperText={errors.balance ?
+                                                    (touched.balance ?
+                                                        <span className="text-red-400 text-sm">{errors.balance}</span> :
+                                                        null)
+                                                    : null
+                                                }
+                                                required />
+                                        </div>
+                                    </>}
+                                <>
+                                    <div>
+                                        <div className="mb-2 block">
+                                            <Label htmlFor="username" value="Your Username" />
+                                        </div>
+                                        <TextInput
+                                            value={values.username}
+                                            id="username"
+                                            name="username"
+                                            type="text"
+                                            placeholder="tracker9099"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            helperText={errors.username ?
+                                                (touched.username ?
+                                                    <span className="text-red-400 text-sm">{errors.username}</span> :
+                                                    null)
+                                                : null
+                                            }
+                                            required />
+                                    </div>
+                                    <div>
+                                        <div className="mb-2 block">
+                                            <Label htmlFor="password" value="Password" />
+                                        </div>
+                                        <TextInput
+                                            value={values.password}
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            helperText={errors.password ?
+                                                (touched.password ?
+                                                    <span className="text-red-400 text-sm">{errors.password}</span> :
+                                                    null)
+                                                : null
+                                            }
+                                            required />
+                                    </div>
+                                </>
+                                <Button className="my-2 sm:my-0" type="submit">{isLogin ? "Login" : "Register"}</Button>
+                                <Button type="button"
+                                    onClick={() => {
+                                        setPageType(isLogin ? "register" : "login");
+                                        resetForm();
+                                    }}>{isLogin
+                                        ? "Don't have an Account? Sign Up here."
+                                        : "Already have an Account? Login here."}</Button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+            </div>
+        </>
+
     )
 
 }

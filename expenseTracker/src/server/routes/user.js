@@ -15,7 +15,7 @@ const router = express.Router();
 /** READ */
 router.get("/:id", verifyToken, getUser);
 router.get("/:id/transactions", getUserTransactions);
-router.get("/:id/wallets", getUserWallets);
+router.get("/:id/wallets", verifyToken, getUserWallets);
 
 /** UPDATE */
 router.post("/:id", addTransaction);
@@ -23,6 +23,6 @@ router.post("/:id/wallets", addWallet);
 
 /** DELETE */
 router.delete("/:id/:trxId", removeTransaction);
-router.delete("/:id/wallet", removeWallet);
+router.delete("/:id/wallet/:walletId", removeWallet);
 
 export default router;
