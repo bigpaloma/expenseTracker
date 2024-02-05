@@ -34,7 +34,7 @@ app.use("/user", userRoutes)
 
 
 /** MONGOOSE SETUP */
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT || process.env.LOCAL_PORT || 6001; // to support PORT injection from Cloud platforms
 const uri = process.env.MONGO_URL;
 const clientOptions = {
   serverApi: {
