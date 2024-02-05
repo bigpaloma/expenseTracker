@@ -34,7 +34,7 @@ app.use("/user", userRoutes)
 
 
 /** MONGOOSE SETUP */
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT || process.env.LOCAL_PORT || 6001; // to support PORT injection from Cloud platforms
 const uri = process.env.MONGO_URL;
 const clientOptions = {
   serverApi: {
@@ -75,7 +75,7 @@ async function run() {
     await mongoose.connect(uri, clientOptions);
     await mongoose.connection.db.admin().command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    ViteExpress.listen(app, 3001, () => console.log(`SERVER PORT: ${3001}`));
+    ViteExpress.listen(app, PORT, () => console.log(`SERVER PORT: ${3001}`));
   } catch (error) {
     // Ensures that the client will close when you error
     console.log(error)
