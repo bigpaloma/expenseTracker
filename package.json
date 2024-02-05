@@ -19,7 +19,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
-    "yup": "^1.3.3"
+    "yup": "^1.3.3",
+    "vite-express": "*"
   },
   "devDependencies": {
     "react": "^18.2.0",
@@ -30,7 +31,6 @@
     "react-router-dom": "^6.21.3",
     "react-tiny-popover": "^8.0.4",
     "redux-persist": "^6.0.0",
-    "vite-express": "*",
     "formik": "^2.4.5",
     "flowbite-react": "^0.7.2",
     "@reduxjs/toolkit": "^2.1.0",
